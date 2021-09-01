@@ -1,8 +1,13 @@
 ul {
   list-style-type: none;
-  padding: 15px;
+  padding: 5px;
+  margin: 0 0 10px 0 
 }
-
+.buttons{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px 0px 20px;
+}
 .container {
   border-radius: 15px;
   background-color: rgb(194, 194, 194);
