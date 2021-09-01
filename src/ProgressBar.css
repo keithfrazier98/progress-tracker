@@ -1,0 +1,25 @@
+.bar {
+  background-color: lightgray;
+}
+
+.progress {
+  height: 24px;
+  width: 50%;
+  background-color: rgb(131, 131, 131);
+}
+
+.progressContainer{
+    margin:15px
+}
+
+.buttonDiv{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px 0 15px
+}
+
+button{
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    font-size:40px;
+}

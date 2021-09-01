@@ -1,0 +1,42 @@
+.flex-container{
+    display:flex
+}
+
+p {
+    font-size: 25px;
+    margin: 0 5px 0 5px
+}
+
+h4{
+    font-size: 25px;
+    margin: 0
+}
+
+.info{
+    justify-content: space-between;
+}
+
+li{
+    display: block;
+    margin: 10px ;
+    width:100%;
+}
+
+.tracker {
+    background-color: rgb(176, 224, 220);
+    border-radius: 15px;
+    padding: 10px;
+    width:95%
+}
+
+@media screen and (min-width: 448px) {
+    li {
+      display: inline-flex;
+      width:45%
+    }
+
+    .tracker{
+        width:100%
+    }
+  }
+
