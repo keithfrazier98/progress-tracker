@@ -1,17 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProgressBar from "./ProgressBar";
 import "./Trackers.css";
 
-function Trackers(data = []) {
-  data = [
-    { title: "Apply to jobs", goal: 5, current:0, occurence: "daily", type: "inc" },
-    { title: "Cold-Outreach", goal: 2, current:183766, occurence: "daily", type: "time" },
-    { title: "Apply to jobs", goal: 5, current:0, occurence: "daily", type: "inc" },
-    { title: "Cold-Outreach", goal: 1, current:0, occurence: "daily", type: "time" },
-  ];
+function Trackers() {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    setData([
+      {
+        title: "Apply to jobs",
+        goal: 5,
+        current: 0,
+        occurence: "daily",
+        type: "inc",
+      },
+      {
+        title: "Cold-Outreach",
+        goal: 2,
+        current: 0,
+        occurence: "daily",
+        type: "time",
+      },
+      {
+        title: "Apply to jobs",
+        goal: 5,
+        current: 0,
+        occurence: "daily",
+        type: "inc",
+      },
+      {
+        title: "Cold-Outreach",
+        goal: 1,
+        current: 0,
+        occurence: "daily",
+        type: "time",
+      },
+    ]);
+  }, []);
 
   const trackers = [];
-  data.forEach((element) => {
+  data.forEach((element, index) => {
     const { title, goal, occurence, type, current } = element;
     trackers.push(
       <li>
@@ -23,7 +50,14 @@ function Trackers(data = []) {
             </div>
             <p>{occurence}</p>
           </div>
-          <ProgressBar current={current} goal={goal} type={type} />
+          <ProgressBar
+            current={current}
+            goal={goal}
+            type={type}
+            index={index}
+            setData={setData}
+            data={data}
+          />
         </div>
       </li>
     );
