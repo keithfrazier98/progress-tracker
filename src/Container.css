@@ -7,17 +7,21 @@ ul {
   display: flex;
   justify-content: space-between;
   padding: 10px 20px 0px 20px;
+  max-width: 300px;
 }
 .container {
   border-radius: 15px;
   background-color: rgb(194, 194, 194);
   justify-content: center;
   display: block;
-}
+  width: fit-content;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
+}
+/*
 @media screen and (min-width: 800px) {
   .container {
-    width: 75%;
+    width: fit-content;
   }
 }
 
@@ -26,3 +30,4 @@ ul {
     width: 50%;
   }
 }
+*/

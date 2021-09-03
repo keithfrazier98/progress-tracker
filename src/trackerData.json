@@ -1,30 +1,30 @@
 [
-    {
-      "title": "Apply to jobs",
-      "goal": 5,
-      "current": 0,
-      "occurence": "daily",
-      "type": "Incremental"
-    },
-    {
-      "title": "Cold-Outreach",
-      "goal": 0.05,
-      "current": 0,
-      "occurence": "daily",
-      "type": "Timer"
-    },
-    {
-      "title": "Apply to jobs",
-      "goal": 5,
-      "current": 0,
-      "occurence": "daily",
-      "type": "Incremental"
-    },
-    {
-      "title": "Cold-Outreach",
-      "goal": 1,
-      "current": 0,
-      "occurence": "daily",
-      "type": "Timer"
-    }
-  ]
+  {
+    "title": "Apply to jobs",
+    "goal": 2,
+    "current": 0,
+    "occurence": "daily",
+    "type": "Incremental"
+  },
+  {
+    "title": "Read",
+    "goal": 3600,
+    "current": 0,
+    "occurence": "daily",
+    "type": "Timer"
+  },
+  {
+    "title": "Play games",
+    "goal": 5,
+    "current": 0,
+    "occurence": "daily",
+    "type": "Incremental"
+  },
+  {
+    "title": "Cold-Outreach",
+    "goal": 1800,
+    "current": 0,
+    "occurence": "daily",
+    "type": "Timer"
+  }
+]

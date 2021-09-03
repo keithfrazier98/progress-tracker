@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Trackers from "./Trackers";
 import "./Container.css";
 import trackerData from "./trackerData.json";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 function Container() {
   const [newTracker, setNewTracker] = useState(false);
@@ -9,14 +10,14 @@ function Container() {
   const initalTrackerData = {
     title: "",
     goal: null,
-    current: null,
+    current: 0,
     occurence: "manual",
     type: "Incremental",
   };
   const [trackerFormData, setTrackerFormData] = useState(initalTrackerData);
   const [data, setData] = useState(trackerData);
-
-  
+  const [dataChange, setDataChange] = useState(false);
+  const [trackers, setTrackers] = useState();
 
   function toggleNewTracker() {
     setNewTracker(true);
@@ -27,10 +28,29 @@ function Container() {
   }
 
   function createTracker() {
-      let newData = data
-      newData.splice(0,0,trackerFormData)
-      setData(newData)
-      setNewTracker(false)
+    let error;
+
+    if (!trackerFormData.title) {
+      error = true;
+      window.alert("New tracker needs a title");
+    } else if (!trackerFormData.goal || Number(trackerFormData.goal) === 0) {
+      error = true;
+      window.alert("New tracker needs a goal");
+    }
+
+    for (let tracker of data) {
+      if (tracker.title === trackerFormData.title) {
+        error = true;
+        window.alert("New tracker needs a unique title.");
+      }
+    }
+    if (!error) {
+      let newData = data;
+      newData.splice(0, 0, trackerFormData);
+      setData(newData);
+      setNewTracker(false);
+      setTrackerFormData(initalTrackerData);
+    }
   }
 
   function cancelNewTracker() {
@@ -38,12 +58,43 @@ function Container() {
     setTrackerFormData(initalTrackerData);
   }
 
+  function reorderList(result) {
+    if (!result.destination) return;
+    const items = Array.from(data);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    setData(items);
+    setDataChange(!dataChange);
+  }
+
+  const trackerElement = (
+    <>
+      <Trackers
+        newTracker={newTracker}
+        setNewTracker={setNewTracker}
+        editMode={editMode}
+        setEditMode={setEditMode}
+        createTracker={createTracker}
+        trackerFormData={trackerFormData}
+        setTrackerFormData={setTrackerFormData}
+        trackerData={trackerData}
+        data={data}
+        setData={setData}
+        dataChange={dataChange}
+        setDataChange={setDataChange}
+        trackers={trackers}
+        setTrackers={setTrackers}
+      />
+    </>
+  );
+
   return (
     <div className="container">
       <div className="buttons">
         <button
           id="add"
           onClick={newTracker ? createTracker : toggleNewTracker}
+          disabled={editMode}
         >
           {newTracker ? (
             <ion-icon name="checkmark-outline"></ion-icon>
@@ -64,20 +115,20 @@ function Container() {
           )}
         </button>
       </div>
-      <ul>
-        <Trackers
-          newTracker={newTracker}
-          setNewTracker={setNewTracker}
-          editMode={editMode}
-          setEditMode={setEditMode}
-          createTracker={createTracker}
-          trackerFormData={trackerFormData}
-          setTrackerFormData={setTrackerFormData}
-          trackerData={trackerData}
-          data={data}
-          setData={setData}
-        />
-      </ul>
+      {editMode ? (
+        <DragDropContext onDragEnd={reorderList}>
+          <Droppable droppableId={"trackers"}>
+            {(provided) => (
+              <ul {...provided.droppableProps} ref={provided.innerRef}>
+                {trackerElement}
+                {provided.placeholder}
+              </ul>
+            )}
+          </Droppable>
+        </DragDropContext>
+      ) : (
+        <ul>{trackerElement}</ul>
+      )}
     </div>
   );
 }

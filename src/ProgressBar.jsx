@@ -29,6 +29,11 @@ function ProgressBar({
   );
 
   function handleIncDec(event) {
+    let call;
+    if (event) {
+      call = event.target.parentNode.id;
+    }
+    if (current === 0 && call === "dec") return;
     setData(() => {
       let newData = [];
       data.forEach((object, i) => {
@@ -58,11 +63,11 @@ function ProgressBar({
       buttons = (
         <div>
           <div className="buttonDiv">
-            <button disabled = {newTracker} onClick={handleIncDec} id="dec">
+            <button disabled={newTracker} onClick={handleIncDec} id="dec">
               <ion-icon name="remove-outline"></ion-icon>
             </button>
             <span style={{ fontSize: "30px" }}>{current}</span>
-            <button disabled = {newTracker} onClick={handleIncDec} id="inc">
+            <button disabled={newTracker} onClick={handleIncDec} id="inc">
               <ion-icon name="add-outline"></ion-icon>
             </button>
           </div>
@@ -94,7 +99,7 @@ function ProgressBar({
       buttons = (
         <div>
           <div className="buttonDiv">
-            <button disabled = {newTracker} onClick={handleStart} id="incTime">
+            <button disabled={newTracker} onClick={handleStart} id="incTime">
               {running ? (
                 <ion-icon name="pause-outline"></ion-icon>
               ) : (
@@ -124,14 +129,13 @@ function ProgressBar({
     <div className="progressContainer">
       {buttons}
       <div className="bar">
-        {editMode || index===null? (
+        {editMode || index === null ? (
           <select
-            style={{ height: "24px" , width:"100%"}}
+            style={{ height: "24px", width: "100%" }}
             id={index}
             name="type"
             value={type}
             onChange={editTracker}
-            
           >
             <option>Incremental</option>
             <option>Timer</option>
