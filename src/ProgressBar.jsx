@@ -2,7 +2,19 @@ import React, { useState } from "react";
 import useInterval from "./utils/useInterval";
 import "./ProgressBar.css";
 
-function ProgressBar({ current, goal, type, index, setData, data }) {
+function ProgressBar({
+  current,
+  type,
+  index,
+  setData,
+  data,
+  editMode,
+  editTracker,
+  goal,
+  setDataChange,
+  dataChange,
+  newTracker,
+}) {
   const [running, setRunning] = useState(false);
 
   function handleStart(event) {
@@ -35,27 +47,29 @@ function ProgressBar({ current, goal, type, index, setData, data }) {
       });
       return newData;
     });
+
+    setDataChange(!dataChange);
   }
 
   let buttons;
 
   switch (type) {
-    case "inc":
+    case "Incremental":
       buttons = (
         <div>
           <div className="buttonDiv">
-            <button onClick={handleIncDec} id="dec">
+            <button disabled = {newTracker} onClick={handleIncDec} id="dec">
               <ion-icon name="remove-outline"></ion-icon>
             </button>
             <span style={{ fontSize: "30px" }}>{current}</span>
-            <button onClick={handleIncDec} id="inc">
+            <button disabled = {newTracker} onClick={handleIncDec} id="inc">
               <ion-icon name="add-outline"></ion-icon>
             </button>
           </div>
         </div>
       );
       break;
-    case "time":
+    case "Timer":
       let decimalHours = current / 3600;
       let hours = Math.trunc(decimalHours);
       let remainingSeconds = current - Math.trunc(decimalHours) * 3600;
@@ -80,7 +94,7 @@ function ProgressBar({ current, goal, type, index, setData, data }) {
       buttons = (
         <div>
           <div className="buttonDiv">
-            <button onClick={handleStart} id="incTime">
+            <button disabled = {newTracker} onClick={handleStart} id="incTime">
               {running ? (
                 <ion-icon name="pause-outline"></ion-icon>
               ) : (
@@ -94,11 +108,43 @@ function ProgressBar({ current, goal, type, index, setData, data }) {
       break;
   }
 
+  const calculatePercent = () => {
+    let percent;
+
+    if (type === "Incremental") {
+      percent = (current / goal) * 100;
+    } else {
+      percent = Math.trunc((current / (goal * 3600)) * 100);
+    }
+
+    return percent;
+  };
+
   return (
     <div className="progressContainer">
       {buttons}
       <div className="bar">
-        <div className="progress"></div>
+        {editMode || index===null? (
+          <select
+            style={{ height: "24px" , width:"100%"}}
+            id={index}
+            name="type"
+            value={type}
+            onChange={editTracker}
+            
+          >
+            <option>Incremental</option>
+            <option>Timer</option>
+          </select>
+        ) : (
+          <>
+            <div
+              className="progress"
+              style={{ width: `${calculatePercent()}%` }}
+            ></div>
+            <span>{calculatePercent()}%</span>
+          </>
+        )}
       </div>
     </div>
   );

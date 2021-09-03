@@ -1,42 +1,77 @@
-.flex-container{
-    display:flex
+.flex-container {
+  display: flex;
 }
 
+h4,
+input,
 p {
     font-size: 25px;
-    margin: 0 5px 0 5px
+  font-family: sans-serif;
+  font-style: normal;
+  font-weight: normal;
 }
 
-h4{
-    font-size: 25px;
-    margin: 0
+p,
+h4 {
+  margin: 0 5px 0 5px;
 }
 
-.info{
-    justify-content: space-between;
+span{
+    font-size: 20px;
 }
 
-li{
-    display: block;
-    margin: 10px ;
-    width:100%;
+select{
+    font-size: 20px;
+}
+
+select,
+option {
+  text-align: right;
+  float: right;
+  margin: 0;
+  padding: 0;
+}
+
+.info {
+  justify-content: space-between;
+}
+
+li {
+  display: block;
+  margin: 10px;
+  width: 100%;
+}
+
+input,
+input:hover,
+input:active,
+input::after {
+  background-color: transparent;
+  border: none;
+}
+
+select,
+select:hover,
+select:active,
+select::after {
+  background-color: transparent;
+  border: none;
 }
 
 .tracker {
-    background-color: rgb(176, 224, 220);
-    border-radius: 15px;
-    padding: 10px;
-    width:95%
+  background-color: rgb(176, 224, 220);
+  border-radius: 15px;
+  padding: 10px;
+  width: 95%;
 }
 
 @media screen and (min-width: 448px) {
-    li {
-      display: inline-flex;
-      width:45%
-    }
-
-    .tracker{
-        width:100%
-    }
+  li {
+    display: inline-flex;
+    width: 45%;
   }
 
+  .tracker {
+    width: 100%;
+  }
+}

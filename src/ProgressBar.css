@@ -1,13 +1,18 @@
 .bar {
+  display: flex;
+  justify-content: space-between;
   background-color: lightgray;
+  border-radius: 5px;
 }
 
 .progress {
   height: 24px;
-  width: 50%;
   background-color: rgb(131, 131, 131);
+  border-radius: 5px;
 }
-
+span{
+  font-size: 20px;
+}
 .progressContainer{
     margin:15px
 }
