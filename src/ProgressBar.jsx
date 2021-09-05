@@ -14,6 +14,7 @@ function ProgressBar({
   setDataChange,
   dataChange,
   newTracker,
+  completed,
 }) {
   const [running, setRunning] = useState(false);
 
@@ -29,11 +30,16 @@ function ProgressBar({
   );
 
   function handleIncDec(event) {
+    let setCompleted;
     let call;
     if (event) {
       call = event.target.parentNode.id;
+      event.target.parentNode.id === "inc" && goal === current + 1
+        ? (setCompleted = true)
+        : (setCompleted = false);
     }
     if (current === 0 && call === "dec") return;
+    if (current === goal && call === "inc") return;
     setData(() => {
       let newData = [];
       data.forEach((object, i) => {
@@ -47,6 +53,7 @@ function ProgressBar({
                 ? current - 1
                 : current + 1
               : current + 1,
+            completed: setCompleted,
           });
         }
       });
@@ -66,7 +73,11 @@ function ProgressBar({
             <button disabled={newTracker} onClick={handleIncDec} id="dec">
               <ion-icon name="remove-outline"></ion-icon>
             </button>
-            <span style={{ fontSize: "30px" }}>{current}</span>
+            {completed ? (
+              <p>Completed!</p>
+            ) : (
+              <span style={{ fontSize: "30px" }}>{current}</span>
+            )}
             <button disabled={newTracker} onClick={handleIncDec} id="inc">
               <ion-icon name="add-outline"></ion-icon>
             </button>
@@ -114,15 +125,7 @@ function ProgressBar({
   }
 
   const calculatePercent = () => {
-    let percent;
-
-    if (type === "Incremental") {
-      percent = (current / goal) * 100;
-    } else {
-      percent = Math.trunc((current / (goal * 3600)) * 100);
-    }
-
-    return percent;
+    return Math.trunc((current / goal) * 100);
   };
 
   return (

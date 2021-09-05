@@ -115,7 +115,6 @@ function Container() {
           )}
         </button>
       </div>
-      {editMode ? (
         <DragDropContext onDragEnd={reorderList}>
           <Droppable droppableId={"trackers"}>
             {(provided) => (
@@ -126,9 +125,6 @@ function Container() {
             )}
           </Droppable>
         </DragDropContext>
-      ) : (
-        <ul>{trackerElement}</ul>
-      )}
     </div>
   );
 }

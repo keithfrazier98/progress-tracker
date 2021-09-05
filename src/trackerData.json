@@ -2,29 +2,37 @@
   {
     "title": "Apply to jobs",
     "goal": 2,
+    "units":"",
     "current": 0,
     "occurence": "daily",
-    "type": "Incremental"
+    "type": "Incremental",
+    "completed":false
   },
   {
     "title": "Read",
     "goal": 3600,
+    "units":"hr",
     "current": 0,
     "occurence": "daily",
-    "type": "Timer"
+    "type": "Timer",
+    "completed":false
   },
   {
     "title": "Play games",
     "goal": 5,
+    "units":"min",
     "current": 0,
     "occurence": "daily",
-    "type": "Incremental"
+    "type": "Incremental",
+    "completed":false
   },
   {
     "title": "Cold-Outreach",
-    "goal": 1800,
+    "goal": 600,
+    "units":"min",
     "current": 0,
     "occurence": "daily",
-    "type": "Timer"
+    "type": "Timer",
+    "completed":false
   }
 ]

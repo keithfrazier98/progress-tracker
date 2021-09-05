@@ -18,19 +18,79 @@ function Trackers({
   trackers,
   setTrackers,
 }) {
+  function editTracker(event) {
+    const currentUnits =
+      event.target.parentNode.querySelector("[name=units]").dataset.current;
+    const index = event.target.id;
+    const name = event.target.name;
+    const value = event.target.value;
+
+    if (newTracker) {
+      setTrackerFormData({
+        ...trackerFormData,
+        [name]: value,
+      });
+    } else {
+      const newValue = data[index];
+
+      name === "goal" && newValue["type"] === "Timer"
+        ? currentUnits === "hr"
+          ? (newValue[name] = value * 3600)
+          : (newValue[name] = value * 60)
+        : (newValue[name] = value);
+
+      if (name === "type") newValue["goal"] = 0;
+
+      const newData = data;
+      newData.splice(index, 1, newValue);
+      setData(newData);
+      setDataChange(!dataChange);
+    }
+  }
   // new tracker button opens tracker form
   // tracker form looks like a tracker and is placed in above other trackers
   // when form is submitted it is placed in the tracker list and trackers are rerendered
+
+  function displayTimerUnits(units, index) {
+    return editMode ? (
+      <select
+        name="units"
+        onChange={editTracker}
+        id={index}
+        data-current={units}
+        value={units}
+      >
+        <option>min</option>
+        <option>hr</option>
+      </select>
+    ) : (
+      <p id={units} data-units={units}>
+        /{units}
+      </p>
+    );
+  }
+
+  function displayTimerGoal(goal) {
+    return goal > 3599 ? goal / 3600 : goal / 60;
+  }
+
+  function deleteTracker(event) {
+    const index = event.target.id;
+    const items = Array.from(data);
+    items.splice(index, 1);
+    setData(items);
+    setDataChange(!dataChange);
+  }
+
   const trackerForm = () => {
     const { title, goal, current, occurence, type } = trackerFormData;
     return (
-      <li>
+      <li key={title}>
         <div className="tracker">
           <form>
             <div className="flex-container info">
               <div className="flex-container">
                 <input
-                  id={0}
                   name="title"
                   placeholder="Tracker Title"
                   maxLength="20"
@@ -40,7 +100,6 @@ function Trackers({
                 ></input>
                 <p>:</p>
                 <input
-                  id={0}
                   name="goal"
                   placeholder="Goal"
                   maxLength="4"
@@ -51,7 +110,6 @@ function Trackers({
               </div>
               <select
                 style={{ height: "24px" }}
-                id={0}
                 name="occurence"
                 value={occurence}
                 onChange={editTracker}
@@ -82,34 +140,19 @@ function Trackers({
     );
   };
 
-  function displayTimerUnits(goal) {
-    if (goal > 3599) {
-      return <p>/hr</p>;
-    } else {
-      return <p>/min</p>;
-    }
-  }
-
-  function displayTimerGoal(goal) {
-    if (goal > 3600) {
-      return goal / 3600;
-    } else {
-      return goal / 60;
-    }
-  }
-
-  function deleteTracker(event) {
-    const index = event.target.id;
-    const items = Array.from(data);
-    items.splice(index, 1);
-    setData(items);
-    setDataChange(!dataChange);
-  }
-
   // edit tracker button opens tracker input options for all trackers
   // optional fields have down arrows where menus are available
   // text info are switched to text fields
-  const listItem = ({ title, goal, occurence, type, current, index }) => (
+  const listItem = ({
+    title,
+    goal,
+    occurence,
+    type,
+    current,
+    index,
+    units,
+    completed,
+  }) => (
     <div className="cancelBox">
       <div className="tracker">
         <div className="flex-container info">
@@ -141,7 +184,7 @@ function Trackers({
             ) : (
               <p>{type === "Timer" ? displayTimerGoal(goal) : goal}</p>
             )}
-            {type === "Timer" ? displayTimerUnits(goal) : null}
+            {type === "Timer" ? displayTimerUnits(units, index) : null}
           </div>
           {editMode ? (
             <select
@@ -184,6 +227,7 @@ function Trackers({
           setDataChange={setDataChange}
           dataChange={dataChange}
           newTracker={newTracker}
+          completed={completed}
         />
       </div>
       {editMode ? (
@@ -201,33 +245,37 @@ function Trackers({
       ) : null}
     </div>
   );
+
   useEffect(() => {
     const existingTrackers = data.map(
-      ({ title, goal, occurence, type, current }, index) => {
-        let li;
-        
-        editMode
-          ? (li = (
-              <Draggable key={title} index={index} draggableId={title}>
-                {(provided) => (
-                  <li
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    ref={provided.innerRef}
-                  >
-                    {listItem({ title, goal, occurence, type, current, index })}
-                  </li>
-                )}
-              </Draggable>
-            ))
-          : (li = (
-              <li>
-                {listItem({ title, goal, occurence, type, current, index })}
-              </li>
-            ));
-
-        return li;
-      }
+      ({ title, goal, occurence, type, current, units, completed }, index) => (
+        <Draggable
+          key={title}
+          index={index}
+          draggableId={title}
+          isDragDisabled={!editMode}
+        >
+          {(provided) => (
+            <li
+              key={title}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              ref={provided.innerRef}
+            >
+              {listItem({
+                title,
+                goal,
+                occurence,
+                type,
+                current,
+                index,
+                units,
+                completed,
+              })}
+            </li>
+          )}
+        </Draggable>
+      )
     );
 
     if (newTracker) {
@@ -236,26 +284,6 @@ function Trackers({
       setTrackers(existingTrackers);
     }
   }, [dataChange, editMode, newTracker, trackerFormData]);
-
-  function editTracker(event) {
-    const index = event.target.id;
-    const name = event.target.name;
-    const value = event.target.value;
-
-    if (newTracker) {
-      setTrackerFormData({
-        ...trackerFormData,
-        [name]: value,
-      });
-    } else {
-      const newValue = data[index];
-      newValue[name] = value;
-      const newData = data;
-      newData.splice(index, 1, newValue);
-      setData(newData);
-      setDataChange(!dataChange);
-    }
-  }
 
   return <>{trackers}</>;
 }
