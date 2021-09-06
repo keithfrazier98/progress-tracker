@@ -4,6 +4,7 @@ import TrackerForm from "./TrackerForm";
 import "./Container.css";
 import trackerData from "./trackerData.json";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { useEffect } from "react";
 
 function Container() {
   const [newTracker, setNewTracker] = useState(false);
@@ -18,7 +19,7 @@ function Container() {
   const [trackerFormData, setTrackerFormData] = useState(initalTrackerData);
   const [data, setData] = useState(trackerData);
   const [dataChange, setDataChange] = useState(false);
-  const [trackers, setTrackers] = useState();
+  const [titleIndex, setTitleIndex] = useState(null);
 
   function editTracker(event) {
     const index = event.target.id;
@@ -28,7 +29,6 @@ function Container() {
       name.splice(name.length - 2, 2);
       name = name.join("");
     }
-    console.log(name);
     const value = event.target.value;
     const newValue = data[index];
 
@@ -37,15 +37,24 @@ function Container() {
         ...trackerFormData,
         [name]: value,
       });
+      name === "title" ? setTitleIndex("0") : setTitleIndex(null);
+      console.log(name);
     } else {
-      name === "goal" && newValue["type"] === "Timer"
-        ? event.target.parentNode.querySelector("[name=units]").dataset
+      if (name === "goal" && newValue["type"] === "Timer") {
+        if (
+          event.target.parentNode.querySelector("[name=units]").dataset
             .current === "hr"
-          ? (newValue[name] = value * 3600)
-          : (newValue[name] = value * 60)
-        : (newValue[name] = value);
+        ) {
+          newValue[name] = value * 3600;
+        } else {
+          newValue[name] = value * 60;
+        }
+      } else {
+        newValue[name] = value;
+      }
 
       if (name === "type") newValue["goal"] = 0;
+      name === "title" ? setTitleIndex(index) : setTitleIndex(null);
 
       const newData = data;
       newData.splice(index, 1, newValue);
@@ -105,16 +114,31 @@ function Container() {
   const trackerElement = (
     <>
       <Trackers
-         newTracker={newTracker}
-         editMode={editMode}
-         data={data}
-         setData={setData}
-         dataChange={dataChange}
-         setDataChange={setDataChange}
-         editTracker={editTracker}
+        newTracker={newTracker}
+        editMode={editMode}
+        data={data}
+        setData={setData}
+        dataChange={dataChange}
+        setDataChange={setDataChange}
+        editTracker={editTracker}
       />
     </>
   );
+
+  useEffect(() => {
+    console.log(titleIndex);
+    console.log(editMode, newTracker, titleIndex);
+    if (
+      (editMode && titleIndex != null) ||
+      (newTracker && titleIndex != null)
+    ) {
+      // workaround for unfocus input bug
+      document
+        .getElementById(`tracker:${titleIndex}`)
+        .firstChild.firstChild.focus();
+      setTitleIndex(null);
+    }
+  }, [dataChange, trackerFormData]);
 
   return (
     <div className="container">

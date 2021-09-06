@@ -70,7 +70,7 @@ function Trackers({
                 <div className="cancelBox">
                   <div className="tracker">
                     <div className="flex-container info">
-                      <div className="flex-container">
+                      <div className="flex-container" id={`tracker:${index}`}>
                         {editMode ? (
                           <label htmlFor={`title:${index}`}>
                             <input
