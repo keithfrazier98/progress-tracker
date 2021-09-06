@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import ProgressBar from "./ProgressBar";
 import { Draggable } from "react-beautiful-dnd";
 import "./Trackers.css";
@@ -18,12 +18,18 @@ function Trackers({
   trackers,
   setTrackers,
 }) {
+  //const inputEl = useRef(null);
   function editTracker(event) {
-    const currentUnits =
-      event.target.parentNode.querySelector("[name=units]").dataset.current;
     const index = event.target.id;
-    const name = event.target.name;
+    let name = event.target.name;
+    if (name.includes('title')) {
+      name = name.split("");
+      name.splice(name.length - 2, 2);
+      name = name.join("");
+    }
+    console.log(name);
     const value = event.target.value;
+    const newValue = data[index];
 
     if (newTracker) {
       setTrackerFormData({
@@ -31,10 +37,9 @@ function Trackers({
         [name]: value,
       });
     } else {
-      const newValue = data[index];
-
       name === "goal" && newValue["type"] === "Timer"
-        ? currentUnits === "hr"
+        ? event.target.parentNode.querySelector("[name=units]").dataset
+            .current === "hr"
           ? (newValue[name] = value * 3600)
           : (newValue[name] = value * 60)
         : (newValue[name] = value);
@@ -45,6 +50,8 @@ function Trackers({
       newData.splice(index, 1, newValue);
       setData(newData);
       setDataChange(!dataChange);
+      //inputEl.current.focus();
+      //console.log(inputEl.current);
     }
   }
   // new tracker button opens tracker form
@@ -90,14 +97,18 @@ function Trackers({
           <form>
             <div className="flex-container info">
               <div className="flex-container">
-                <input
-                  name="title"
-                  placeholder="Tracker Title"
-                  maxLength="20"
-                  size={"10"}
-                  value={title}
-                  onChange={editTracker}
-                ></input>
+                <label htmlFor={`title`}>
+                  <input
+                    name="title"
+                    placeholder="Tracker Title"
+                    maxLength="20"
+                    size={"10"}
+                    value={title}
+                    onChange={editTracker}
+                    required
+                  ></input>
+                </label>
+
                 <p>:</p>
                 <input
                   name="goal"
@@ -106,6 +117,7 @@ function Trackers({
                   size={"4"}
                   value={goal}
                   onChange={editTracker}
+                  required
                 ></input>
               </div>
               <select
@@ -158,15 +170,18 @@ function Trackers({
         <div className="flex-container info">
           <div className="flex-container">
             {editMode ? (
-              <input
-                id={index}
-                name="title"
-                placeholder="Tracker Title"
-                maxLength="15"
-                size={"10"}
-                value={title}
-                onChange={editTracker}
-              ></input>
+              <label htmlFor={`title:${index}`}>
+                <input
+                  id={index}
+                  name={`title:${index}`}
+                  placeholder="Tracker Title"
+                  maxLength="15"
+                  size={"10"}
+                  value={title}
+                  onChange={editTracker}
+                  // ref={inputEl}
+                ></input>
+              </label>
             ) : (
               <h4>{title}</h4>
             )}
@@ -245,6 +260,47 @@ function Trackers({
       ) : null}
     </div>
   );
+
+  function renderTrackers() {
+    const existingTrackers = data.map(
+      ({ title, goal, occurence, type, current, units, completed }, index) => (
+        <Draggable
+          key={title}
+          index={index}
+          draggableId={title}
+          isDragDisabled={!editMode}
+        >
+          {(provided) => (
+            <li
+              key={title}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              ref={provided.innerRef}
+            >
+              {listItem({
+                title,
+                goal,
+                occurence,
+                type,
+                current,
+                index,
+                units,
+                completed,
+              })}
+            </li>
+          )}
+        </Draggable>
+      )
+    );
+
+    if (newTracker) {
+      setTrackers([trackerForm(), ...existingTrackers]);
+    } else {
+      setTrackers(existingTrackers);
+    }
+
+    return trackers;
+  }
 
   useEffect(() => {
     const existingTrackers = data.map(

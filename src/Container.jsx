@@ -9,7 +9,7 @@ function Container() {
   const [editMode, setEditMode] = useState(false);
   const initalTrackerData = {
     title: "",
-    goal: null,
+    goal: "",
     current: 0,
     occurence: "manual",
     type: "Incremental",

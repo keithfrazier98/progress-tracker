@@ -1,6 +1,6 @@
 [
   {
-    "title": "Apply to jobs",
+    "title": "Apply ",
     "goal": 2,
     "units":"",
     "current": 0,
@@ -18,7 +18,7 @@
     "completed":false
   },
   {
-    "title": "Play games",
+    "title": "Play ",
     "goal": 5,
     "units":"min",
     "current": 0,
@@ -27,7 +27,7 @@
     "completed":false
   },
   {
-    "title": "Cold-Outreach",
+    "title": "Cold",
     "goal": 600,
     "units":"min",
     "current": 0,
