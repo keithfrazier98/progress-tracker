@@ -40,6 +40,11 @@ function ProgressBar({
     }
     if (current === 0 && call === "dec") return;
     if (current === goal && call === "inc") return;
+    if (!event && goal === current + 1) {
+      setRunning(false)
+      setCompleted = true
+    }
+    
     setData(() => {
       let newData = [];
       data.forEach((object, i) => {
@@ -70,7 +75,7 @@ function ProgressBar({
       buttons = (
         <div>
           <div className="buttonDiv">
-            <button disabled={newTracker} onClick={handleIncDec} id="dec">
+            <button disabled={newTracker || completed} onClick={handleIncDec} id="dec">
               <ion-icon name="remove-outline"></ion-icon>
             </button>
             {completed ? (
@@ -78,7 +83,7 @@ function ProgressBar({
             ) : (
               <span style={{ fontSize: "30px" }}>{current}</span>
             )}
-            <button disabled={newTracker} onClick={handleIncDec} id="inc">
+            <button disabled={newTracker || completed} onClick={handleIncDec} id="inc">
               <ion-icon name="add-outline"></ion-icon>
             </button>
           </div>
@@ -110,7 +115,7 @@ function ProgressBar({
       buttons = (
         <div>
           <div className="buttonDiv">
-            <button disabled={newTracker} onClick={handleStart} id="incTime">
+            <button disabled={newTracker || completed} onClick={handleStart} id="incTime">
               {running ? (
                 <ion-icon name="pause-outline"></ion-icon>
               ) : (
@@ -147,9 +152,17 @@ function ProgressBar({
           <>
             <div
               className="progress"
-              style={{ width: `${calculatePercent()}%` }}
-            ></div>
-            <span>{calculatePercent()}%</span>
+              style={{
+                width: `${calculatePercent()}%`,
+                zIndex: 1,
+                display:"flex",
+                justifyContent:"end"
+              }}
+            >
+              <span style={{ zIndex: 2, overflow:"hidden", color:"white"}}>
+                {calculatePercent()}%
+              </span>
+            </div>
           </>
         )}
       </div>

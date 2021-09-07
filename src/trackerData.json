@@ -28,7 +28,7 @@
   },
   {
     "title": "Cold",
-    "goal": 600,
+    "goal": 15,
     "units":"min",
     "current": 0,
     "occurence": "daily",

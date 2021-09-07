@@ -29,8 +29,11 @@ function Container() {
       name.splice(name.length - 2, 2);
       name = name.join("");
     }
+
+    
     const value = event.target.value;
     const newValue = data[index];
+
 
     if (newTracker) {
       setTrackerFormData({
@@ -126,13 +129,12 @@ function Container() {
   );
 
   useEffect(() => {
-    console.log(titleIndex);
-    console.log(editMode, newTracker, titleIndex);
+    // workaround for unfocus input bug
+    //this conditional will keep the proper input field focused upon rerender
     if (
       (editMode && titleIndex != null) ||
       (newTracker && titleIndex != null)
     ) {
-      // workaround for unfocus input bug
       document
         .getElementById(`tracker:${titleIndex}`)
         .firstChild.firstChild.focus();

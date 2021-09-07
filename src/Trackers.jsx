@@ -37,12 +37,22 @@ function Trackers({
 
   function deleteTracker(event) {
     const index = event.target.id;
-    const items = Array.from(data);
-    items.splice(index, 1);
-    setData(items);
+    const newValue = Array.from(data);
+    newValue.splice(index, 1);
+    setData(newValue);
     setDataChange(!dataChange);
   }
 
+  function manualReset(event){
+    const index = event.target.parentNode.id
+    const newValue = data[index]
+    newValue['current'] = 0
+    newValue['completed'] = false
+    const newData = Array.from(data)
+    newData.splice(index,1,newValue)
+    setData(newData)
+    setDataChange(!dataChange)
+  }
   // edit tracker button opens tracker input options for all trackers
   // optional fields have down arrows where menus are available
   // text info are switched to text fields
@@ -126,7 +136,7 @@ function Trackers({
                         <>
                           <span>
                             {occurence === "Manual" ? (
-                              <button style={{ fontSize: "20px" }}>
+                              <button id={index} onClick={manualReset} style={{ fontSize: "20px" }}>
                                 <ion-icon name="refresh-outline"></ion-icon>
                               </button>
                             ) : (
