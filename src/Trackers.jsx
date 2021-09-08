@@ -43,15 +43,15 @@ function Trackers({
     setDataChange(!dataChange);
   }
 
-  function manualReset(event){
-    const index = event.target.parentNode.id
-    const newValue = data[index]
-    newValue['current'] = 0
-    newValue['completed'] = false
-    const newData = Array.from(data)
-    newData.splice(index,1,newValue)
-    setData(newData)
-    setDataChange(!dataChange)
+  function manualReset(event) {
+    const index = event.target.parentNode.id;
+    const newValue = data[index];
+    newValue["current"] = 0;
+    newValue["completed"] = false;
+    const newData = Array.from(data);
+    newData.splice(index, 1, newValue);
+    setData(newData);
+    setDataChange(!dataChange);
   }
   // edit tracker button opens tracker input options for all trackers
   // optional fields have down arrows where menus are available
@@ -72,6 +72,7 @@ function Trackers({
           >
             {(provided) => (
               <li
+                id={title}
                 key={title}
                 {...provided.draggableProps}
                 {...provided.dragHandleProps}
@@ -86,6 +87,7 @@ function Trackers({
                             <input
                               id={index}
                               name={`title:${index}`}
+                              key={`title`}
                               placeholder="Tracker Title"
                               maxLength="15"
                               size={"10"}
@@ -94,7 +96,7 @@ function Trackers({
                             ></input>
                           </label>
                         ) : (
-                          <h4>{title}</h4>
+                          <h4 id="title">{title}</h4>
                         )}
                         <p>:</p>
                         {editMode ? (
@@ -103,14 +105,14 @@ function Trackers({
                             name="goal"
                             placeholder="Goal"
                             maxLength="4"
-                            size={"3"}
+                            size={"2"}
                             value={
                               type === "Timer" ? displayTimerGoal(goal) : goal
                             }
                             onChange={editTracker}
                           ></input>
                         ) : (
-                          <p>
+                          <p id="goal">
                             {type === "Timer" ? displayTimerGoal(goal) : goal}
                           </p>
                         )}
@@ -134,9 +136,14 @@ function Trackers({
                         </select>
                       ) : (
                         <>
-                          <span>
+                          <span id="occurence">
                             {occurence === "Manual" ? (
-                              <button id={index} onClick={manualReset} style={{ fontSize: "20px" }}>
+                              <button
+                                id={index}
+                                name="reset"
+                                onClick={manualReset}
+                                style={{ fontSize: "20px" }}
+                              >
                                 <ion-icon name="refresh-outline"></ion-icon>
                               </button>
                             ) : (

@@ -74,7 +74,7 @@ function ProgressBar({
     case "Incremental":
       buttons = (
         <div>
-          <div className="buttonDiv">
+          <div className="buttonDiv" id="IncrementalBtns">
             <button disabled={newTracker || completed} onClick={handleIncDec} id="dec">
               <ion-icon name="remove-outline"></ion-icon>
             </button>
@@ -114,7 +114,7 @@ function ProgressBar({
 
       buttons = (
         <div>
-          <div className="buttonDiv">
+          <div className="buttonDiv" id="TimerBtns">
             <button disabled={newTracker || completed} onClick={handleStart} id="incTime">
               {running ? (
                 <ion-icon name="pause-outline"></ion-icon>

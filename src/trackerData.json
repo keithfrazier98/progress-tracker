@@ -1,15 +1,6 @@
 [
   {
-    "title": "Apply ",
-    "goal": 2,
-    "units":"",
-    "current": 0,
-    "occurence": "daily",
-    "type": "Incremental",
-    "completed":false
-  },
-  {
-    "title": "Read",
+    "title": "Play video games",
     "goal": 3600,
     "units":"hr",
     "current": 0,
@@ -18,21 +9,12 @@
     "completed":false
   },
   {
-    "title": "Play ",
-    "goal": 5,
+    "title": "Eat apples",
+    "goal": 3,
     "units":"min",
     "current": 0,
     "occurence": "daily",
     "type": "Incremental",
-    "completed":false
-  },
-  {
-    "title": "Cold",
-    "goal": 15,
-    "units":"min",
-    "current": 0,
-    "occurence": "daily",
-    "type": "Timer",
     "completed":false
   }
 ]
