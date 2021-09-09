@@ -10,7 +10,7 @@ function TrackerForm({
   dataChange,
   setDataChange,
 }) {
-  const { title, goal, current, occurence, type } = trackerFormData;
+  const { title, goal, current, occurence, type, units } = trackerFormData;
   return (
     <li key={title}>
       <div className="tracker">
@@ -34,11 +34,23 @@ function TrackerForm({
                 name="goal"
                 placeholder="Goal"
                 maxLength="4"
-                size={"4"}
+                size={"2"}
                 value={goal}
                 onChange={editTracker}
                 required
               ></input>
+              {type === "Timer" ? (
+                <select
+                  name="units"
+                  onChange={editTracker}
+                  id="0"
+                  data-current={units}
+                  value={units}
+                >
+                  <option>min</option>
+                  <option>hr</option>
+                </select>
+              ) : null}
             </div>
             <select
               style={{ height: "24px" }}

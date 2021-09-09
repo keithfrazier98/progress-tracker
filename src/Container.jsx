@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Trackers from "./Trackers";
 import TrackerForm from "./TrackerForm";
 import "./Container.css";
-import trackerData from "./trackerData.json";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { useEffect } from "react";
 
@@ -15,9 +14,10 @@ function Container() {
     current: 0,
     occurence: "Manual",
     type: "Incremental",
+    units: "hr",
   };
   const [trackerFormData, setTrackerFormData] = useState(initalTrackerData);
-  const [data, setData] = useState(trackerData);
+  const [data, setData] = useState([]);
   const [dataChange, setDataChange] = useState(false);
   const [titleIndex, setTitleIndex] = useState(null);
 
@@ -30,10 +30,8 @@ function Container() {
       name = name.join("");
     }
 
-    
     const value = event.target.value;
     const newValue = data[index];
-
 
     if (newTracker) {
       setTrackerFormData({
@@ -41,7 +39,6 @@ function Container() {
         [name]: value,
       });
       name === "title" ? setTitleIndex("0") : setTitleIndex(null);
-      console.log(name);
     } else {
       if (name === "goal" && newValue["type"] === "Timer") {
         if (
@@ -91,9 +88,28 @@ function Container() {
         window.alert("New tracker needs a unique title.");
       }
     }
+
+    let newData = data;
+
     if (!error) {
-      let newData = data;
-      newData.splice(0, 0, trackerFormData);
+      const { goal, type, units } = trackerFormData;
+      console.log(goal, type, units);
+      if (type === "Timer") {
+        if (units === "hr") {
+          newData.splice(0, 0, {
+            ...trackerFormData,
+            ["goal"]: goal * 3600,
+          });
+        } else {
+          newData.splice(0, 0, {
+            ...trackerFormData,
+            ["goal"]: goal * 60,
+          });
+        }
+      } else {
+        newData.splice(0, 0, trackerFormData);
+      }
+
       setData(newData);
       setNewTracker(false);
       setTrackerFormData(initalTrackerData);

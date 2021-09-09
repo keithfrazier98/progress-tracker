@@ -81,7 +81,7 @@ function ProgressBar({
             {completed ? (
               <p>Completed!</p>
             ) : (
-              <span style={{ fontSize: "30px" }}>{current}</span>
+              <span id="current" style={{ fontSize: "30px" }}>{current}</span>
             )}
             <button disabled={newTracker || completed} onClick={handleIncDec} id="inc">
               <ion-icon name="add-outline"></ion-icon>

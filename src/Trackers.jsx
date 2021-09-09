@@ -12,6 +12,36 @@ function Trackers({
   setDataChange,
   editTracker,
 }) {
+  const placeholderTracker = (
+    <>
+      <Draggable
+        key={"title"}
+        index={0}
+        draggableId={"title"}
+        isDragDisabled={!editMode}
+      >
+        {(provided) => (
+          <li
+            id={"title"}
+            key={"title"}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+          >
+            <div className="cancelBox" style={{height:"150px"}}>
+              <div className="tracker" style={{display:"flex"}}>
+                    <h4 style={{alignSelf:"center"}}>
+                      Click <ion-icon name="add-circle-outline"></ion-icon> to
+                      create a new tracker!
+                    </h4>
+              </div>
+            </div>
+          </li>
+        )}
+      </Draggable>
+    </>
+  );
+
   function displayTimerUnits(units, index) {
     return editMode ? (
       <select
@@ -59,135 +89,148 @@ function Trackers({
 
   return (
     <>
-      {data.map(
-        (
-          { title, goal, occurence, type, current, units, completed },
-          index
-        ) => (
-          <Draggable
-            key={title}
-            index={index}
-            draggableId={title}
-            isDragDisabled={!editMode}
-          >
-            {(provided) => (
-              <li
-                id={title}
+      {data.length > 0 || newTracker
+        ? data.map(
+            (
+              { title, goal, occurence, type, current, units, completed },
+              index
+            ) => (
+              <Draggable
                 key={title}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-                ref={provided.innerRef}
+                index={index}
+                draggableId={title}
+                isDragDisabled={!editMode}
               >
-                <div className="cancelBox">
-                  <div className="tracker">
-                    <div className="flex-container info">
-                      <div className="flex-container" id={`tracker:${index}`}>
-                        {editMode ? (
-                          <label htmlFor={`title:${index}`}>
-                            <input
+                {(provided) => (
+                  <li
+                    id={title}
+                    key={title}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    ref={provided.innerRef}
+                  >
+                    <div className="cancelBox">
+                      <div className="tracker">
+                        <div className="flex-container info">
+                          <div
+                            className="flex-container"
+                            id={`tracker:${index}`}
+                          >
+                            {editMode ? (
+                              <label htmlFor={`title:${index}`}>
+                                <input
+                                  id={index}
+                                  name={`title:${index}`}
+                                  key={`title`}
+                                  placeholder="Tracker Title"
+                                  maxLength="15"
+                                  size={"10"}
+                                  value={title}
+                                  onChange={editTracker}
+                                ></input>
+                              </label>
+                            ) : (
+                              <h4 id="title">{title}</h4>
+                            )}
+                            <p>:</p>
+                            {editMode ? (
+                              <input
+                                id={index}
+                                name="goal"
+                                placeholder="Goal"
+                                maxLength="4"
+                                size={"2"}
+                                value={
+                                  type === "Timer"
+                                    ? displayTimerGoal(goal)
+                                    : goal
+                                }
+                                onChange={editTracker}
+                              ></input>
+                            ) : (
+                              <p id="goal">
+                                {type === "Timer"
+                                  ? displayTimerGoal(goal)
+                                  : goal}
+                              </p>
+                            )}
+                            {type === "Timer"
+                              ? displayTimerUnits(units, index)
+                              : null}
+                          </div>
+                          {editMode ? (
+                            <select
+                              style={{ height: "24px" }}
                               id={index}
-                              name={`title:${index}`}
-                              key={`title`}
-                              placeholder="Tracker Title"
-                              maxLength="15"
-                              size={"10"}
-                              value={title}
+                              name="occurence"
+                              value={occurence}
                               onChange={editTracker}
-                            ></input>
-                          </label>
-                        ) : (
-                          <h4 id="title">{title}</h4>
-                        )}
-                        <p>:</p>
-                        {editMode ? (
-                          <input
-                            id={index}
-                            name="goal"
-                            placeholder="Goal"
-                            maxLength="4"
-                            size={"2"}
-                            value={
-                              type === "Timer" ? displayTimerGoal(goal) : goal
-                            }
-                            onChange={editTracker}
-                          ></input>
-                        ) : (
-                          <p id="goal">
-                            {type === "Timer" ? displayTimerGoal(goal) : goal}
-                          </p>
-                        )}
-                        {type === "Timer"
-                          ? displayTimerUnits(units, index)
-                          : null}
+                            >
+                              <option>Daily</option>
+                              <option>Weekly</option>
+                              <option>Monthly</option>
+                              <option>Yearly</option>
+                              <option>Manual</option>
+                            </select>
+                          ) : (
+                            <>
+                              <span id="occurence">
+                                {occurence === "Manual" ? (
+                                  <button
+                                    id={index}
+                                    name="reset"
+                                    onClick={manualReset}
+                                    style={{ fontSize: "20px" }}
+                                  >
+                                    <ion-icon name="refresh-outline"></ion-icon>
+                                  </button>
+                                ) : (
+                                  occurence
+                                )}
+                              </span>
+                            </>
+                          )}
+                        </div>
+                        <ProgressBar
+                          current={current}
+                          goal={goal}
+                          type={type}
+                          index={index}
+                          setData={setData}
+                          data={data}
+                          editMode={editMode}
+                          editTracker={editTracker}
+                          occurence={occurence}
+                          setDataChange={setDataChange}
+                          dataChange={dataChange}
+                          newTracker={newTracker}
+                          completed={completed}
+                        />
                       </div>
                       {editMode ? (
-                        <select
-                          style={{ height: "24px" }}
-                          id={index}
-                          name="occurence"
-                          value={occurence}
-                          onChange={editTracker}
+                        <div
+                          style={{
+                            alignContent: "center",
+                            display: "flex",
+                            padding: "50px 0 50px 0",
+                          }}
                         >
-                          <option>Daily</option>
-                          <option>Weekly</option>
-                          <option>Monthly</option>
-                          <option>Yearly</option>
-                          <option>Manual</option>
-                        </select>
-                      ) : (
-                        <>
-                          <span id="occurence">
-                            {occurence === "Manual" ? (
-                              <button
-                                id={index}
-                                name="reset"
-                                onClick={manualReset}
-                                style={{ fontSize: "20px" }}
-                              >
-                                <ion-icon name="refresh-outline"></ion-icon>
-                              </button>
-                            ) : (
-                              occurence
-                            )}
-                          </span>
-                        </>
-                      )}
+                          <button
+                            id={index}
+                            role="button"
+                            onClick={deleteTracker}
+                          >
+                            <ion-icon name="close-circle-outline"></ion-icon>
+                          </button>
+                        </div>
+                      ) : null}
                     </div>
-                    <ProgressBar
-                      current={current}
-                      goal={goal}
-                      type={type}
-                      index={index}
-                      setData={setData}
-                      data={data}
-                      editMode={editMode}
-                      editTracker={editTracker}
-                      occurence={occurence}
-                      setDataChange={setDataChange}
-                      dataChange={dataChange}
-                      newTracker={newTracker}
-                      completed={completed}
-                    />
-                  </div>
-                  {editMode ? (
-                    <div
-                      style={{
-                        alignContent: "center",
-                        display: "flex",
-                        padding: "50px 0 50px 0",
-                      }}
-                    >
-                      <button id={index} role="button" onClick={deleteTracker}>
-                        <ion-icon name="close-circle-outline"></ion-icon>
-                      </button>
-                    </div>
-                  ) : null}
-                </div>
-              </li>
-            )}
-          </Draggable>
-        )
-      )}
+                  </li>
+                )}
+              </Draggable>
+            )
+          )
+        : placeholderTracker}
     </>
   );
 }
