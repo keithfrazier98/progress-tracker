@@ -155,17 +155,15 @@ function Container() {
           newData.splice(0, 0, {
             ...trackerFormData,
             ["goal"]: goal * 3600,
-            ["timestamp"]: new Date(),
           });
         } else {
           newData.splice(0, 0, {
             ...trackerFormData,
             ["goal"]: goal * 60,
-            ["timestamp"]: new Date(),
           });
         }
       } else {
-        newData.splice(0, 0, { ...trackerFormData, ["timestamp"]: new Date() });
+        newData.splice(0, 0, { ...trackerFormData});
       }
 
       setData(newData);
