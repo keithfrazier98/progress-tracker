@@ -32,14 +32,20 @@ function ProgressBar({
   function handleIncDec(event) {
     let setCompleted;
     let call;
+
+    if (current === 0 && call === "dec") return;
+    if (current === goal && call === "inc") return;
+
     if (event) {
       call = event.target.parentNode.id;
-      event.target.parentNode.id === "inc" && goal === current + 1
+      console.log(call, goal, current, current + 1)
+      event.target.parentNode.id === "inc" && goal == current + 1
         ? (setCompleted = true)
         : (setCompleted = false);
     }
-    if (current === 0 && call === "dec") return;
-    if (current === goal && call === "inc") return;
+
+    console.log(setCompleted, completed)
+    
     if (!event && goal === current + 1) {
       setRunning(false)
       setCompleted = true
@@ -79,7 +85,7 @@ function ProgressBar({
               <ion-icon name="remove-outline"></ion-icon>
             </button>
             {completed ? (
-              <p>Completed!</p>
+              <p id="completed">Completed!</p>
             ) : (
               <span id="current" style={{ fontSize: "30px" }}>{current}</span>
             )}

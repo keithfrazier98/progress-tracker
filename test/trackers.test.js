@@ -1,5 +1,5 @@
 describe("Trackers", () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await page.goto("http://localhost:3000/");
     //tracker #1
     await page.click("#add");
@@ -192,6 +192,9 @@ describe("Trackers", () => {
     );
   });
 
+  it("restarts tracker after one day", ()=>{
+    
+  })
   afterAll(async () => {
     await browser.close;
   });
