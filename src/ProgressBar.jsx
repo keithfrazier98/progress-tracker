@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useInterval from "./utils/useInterval";
-import "./ProgressBar.css";
+import "./styles/ProgressBar.css";
 
 function ProgressBar({
   current,
@@ -38,19 +38,16 @@ function ProgressBar({
 
     if (event) {
       call = event.target.parentNode.id;
-      console.log(call, goal, current, current + 1)
       event.target.parentNode.id === "inc" && goal == current + 1
         ? (setCompleted = true)
         : (setCompleted = false);
     }
 
-    console.log(setCompleted, completed)
-    
     if (!event && goal === current + 1) {
-      setRunning(false)
-      setCompleted = true
+      setRunning(false);
+      setCompleted = true;
     }
-    
+
     setData(() => {
       let newData = [];
       data.forEach((object, i) => {
@@ -81,15 +78,25 @@ function ProgressBar({
       buttons = (
         <div>
           <div className="buttonDiv" id="IncrementalBtns">
-            <button disabled={newTracker || completed} onClick={handleIncDec} id="dec">
+            <button
+              disabled={newTracker || completed || editMode}
+              onClick={handleIncDec}
+              id="dec"
+            >
               <ion-icon name="remove-outline"></ion-icon>
             </button>
             {completed ? (
-              <p id="completed">Completed!</p>
+              <p id="iCompleted">Completed!</p>
             ) : (
-              <span id="current" style={{ fontSize: "30px" }}>{current}</span>
+              <span id="current" style={{ fontSize: "30px" }}>
+                {current}
+              </span>
             )}
-            <button disabled={newTracker || completed} onClick={handleIncDec} id="inc">
+            <button
+              disabled={newTracker || completed || editMode}
+              onClick={handleIncDec}
+              id="inc"
+            >
               <ion-icon name="add-outline"></ion-icon>
             </button>
           </div>
@@ -121,14 +128,22 @@ function ProgressBar({
       buttons = (
         <div>
           <div className="buttonDiv" id="TimerBtns">
-            <button disabled={newTracker || completed} onClick={handleStart} id="incTime">
+            <button
+              disabled={newTracker || completed || editMode}
+              onClick={handleStart}
+              id="incTime"
+            >
               {running ? (
                 <ion-icon name="pause-outline"></ion-icon>
               ) : (
                 <ion-icon name="play-outline"></ion-icon>
               )}
             </button>
-            <span style={{ fontSize: "30px" }}>{timeString}</span>
+            {completed ? (
+              <p id="tCompleted" style={{alignSelf:"center"}}>Completed!</p>
+            ) : (
+              <span style={{ fontSize: "30px" }}>{timeString}</span>
+            )}
           </div>
         </div>
       );
@@ -161,11 +176,11 @@ function ProgressBar({
               style={{
                 width: `${calculatePercent()}%`,
                 zIndex: 1,
-                display:"flex",
-                justifyContent:"end"
+                display: "flex",
+                justifyContent: "end",
               }}
             >
-              <span style={{ zIndex: 2, overflow:"hidden", color:"white"}}>
+              <span style={{ zIndex: 2, overflow: "hidden", color: "white" }}>
                 {calculatePercent()}%
               </span>
             </div>

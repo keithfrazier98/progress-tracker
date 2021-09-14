@@ -1,12 +1,14 @@
 {
-  "name": "progress-tracker",
+  "name": "@keithers98/progress-tracker",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "keywords": ["react", "components", "ui"],
   "jest": {
     "verbose": true,
     "preset": "jest-puppeteer"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -19,7 +21,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "rm -rf dist && NODE_ENV=production babel src --out-dir dist --copy-files",
     "test": "jest",
     "eject": "react-scripts eject"
   },
@@ -42,6 +44,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
     "jest": "^26.6.0",
     "jest-puppeteer": "^5.0.4",
     "puppeteer": "^9.1.1"

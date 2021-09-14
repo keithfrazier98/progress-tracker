@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Trackers from "./Trackers";
 import TrackerForm from "./TrackerForm";
-import "./Container.css";
+import "./styles/Container.css";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 const schedule = require("node-schedule");
 
@@ -65,7 +65,6 @@ function Container() {
 
   function createResetTrackerJobs() {
     // filter through data on every render and create schedules for each tracker depending on the occurence
-
     const dailyTackers = [];
     const weeklyTrackers = [];
     const monthlyTackers = [];
@@ -149,7 +148,6 @@ function Container() {
 
     if (!error) {
       const { goal, type, units } = trackerFormData;
-      console.log(goal, type, units);
       if (type === "Timer") {
         if (units === "hr") {
           newData.splice(0, 0, {

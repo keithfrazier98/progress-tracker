@@ -1,7 +1,7 @@
 import React from "react";
 import ProgressBar from "./ProgressBar";
 import { Draggable } from "react-beautiful-dnd";
-import "./Trackers.css";
+import "./styles/Trackers.css";
 
 function Trackers({
   newTracker,
@@ -28,7 +28,7 @@ function Trackers({
             {...provided.dragHandleProps}
             ref={provided.innerRef}
           >
-            <div className="cancelBox" style={{height:"150px"}}>
+            <div className="cancelBox" style={{height:"300px"}}>
               <div className="tracker" style={{display:"flex"}}>
                     <h4 style={{alignSelf:"center"}}>
                       Click <ion-icon name="add-circle-outline"></ion-icon> to
