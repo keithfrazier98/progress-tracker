@@ -13,6 +13,7 @@
 /build
 
 # misc
+dist
 process.md
 .DS_Store
 .env.local
