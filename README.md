@@ -1,4 +1,4 @@
-# 🎆 progress-tracker 🎆
+# 🎆 react-progress-tracker 🎆
 
 > NPM: https://www.npmjs.com/package/@keithers98/progress-tracker
 > 
