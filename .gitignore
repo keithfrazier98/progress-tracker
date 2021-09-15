@@ -15,6 +15,7 @@
 # misc
 dist
 process.md
+.env
 .DS_Store
 .env.local
 .env.development.local
