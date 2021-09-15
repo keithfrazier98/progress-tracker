@@ -2,7 +2,7 @@
 
 A progress tracker creater for react applications. Component based customizalble trackers for tracking your progrss for personal goals.
 
-## Tracker Container Component
+## 🎆 Tracker Container Component 🎆
 
 The < TrackerContainer /> component is the main component in the package, and the only component for supported use at the moment. It makes use of the other components in the file:
 
