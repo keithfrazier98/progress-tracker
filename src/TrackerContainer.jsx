@@ -5,7 +5,7 @@ import "./styles/Container.css";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 const schedule = require("node-schedule");
 
-function Container() {
+function TrackerContainer() {
   const [newTracker, setNewTracker] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const initalTrackerData = {
@@ -61,61 +61,6 @@ function Container() {
       setData(newData);
       setDataChange(!dataChange);
     }
-  }
-
-  function createResetTrackerJobs() {
-    // filter through data on every render and create schedules for each tracker depending on the occurence
-    const dailyTackers = [];
-    const weeklyTrackers = [];
-    const monthlyTackers = [];
-    const yearlyTrackers = [];
-
-    data.forEach((trackerData, index) => {
-      switch (trackerData.occurence) {
-        case "Daily":
-          dailyTackers.push(index);
-          break;
-        case "Weekly":
-          weeklyTrackers.push(index);
-          break;
-        case "Monthly":
-          monthlyTackers.push(index);
-          break;
-        case "Yearly":
-          yearlyTrackers.push(index);
-          break;
-      }
-    });
-
-    function resetTrackers(trackerList) {
-      const updatedTrackers = {};
-      const newData = data;
-      trackerList.forEach((trackerIndex) => {
-        updatedTrackers[trackerIndex] = {
-          ...data[trackerIndex],
-          ["current"]: 0,
-        };
-      });
-
-      for (const [index, udpatedTracker] of Object.entries(updatedTrackers)) {
-        newData.splice(index, 1, udpatedTracker);
-      }
-
-      setData(newData);
-    }
-
-    const dailyJobs = schedule.scheduleJob("1 0 0 * * *", () => {
-      resetTrackers(dailyTackers);
-    });
-    const weeklyJobs = schedule.scheduleJob("1 0 0 * * 0", () => {
-      resetTrackers(weeklyTrackers);
-    });
-    const monthlyJobs = schedule.scheduleJob("1 0 0 1 * *", () => {
-      resetTrackers(monthlyTackers);
-    });
-    const yearlyJobs = schedule.scheduleJob("1 0 0 * 1 *", () => {
-      resetTrackers(yearlyTrackers);
-    });
   }
 
   function toggleNewTracker() {
@@ -199,8 +144,6 @@ function Container() {
   );
 
   useEffect(() => {
-    if (data.length > 0) createResetTrackerJobs();
-
     // workaround for unfocus input bug
     //this conditional will keep the proper input field focused upon rerender
     if (
@@ -266,4 +209,4 @@ function Container() {
   );
 }
 
-export default Container;
+export default TrackerContainer;

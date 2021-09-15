@@ -58,10 +58,6 @@ function TrackerForm({
               value={occurence}
               onChange={editTracker}
             >
-              <option>Daily</option>
-              <option>Weekly</option>
-              <option>Monthly</option>
-              <option>Yearly</option>
               <option>Manual</option>
             </select>
           </div>

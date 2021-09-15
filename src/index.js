@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Container from "./Container";
+import TrackerContainer from "./TrackerContainer";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Container/>
+    <TrackerContainer/>
   </React.StrictMode>,
   document.getElementById('progressTracker')
 );

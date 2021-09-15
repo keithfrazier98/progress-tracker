@@ -158,22 +158,6 @@ function Trackers({
                               ? displayTimerUnits(units, index)
                               : null}
                           </div>
-                          {editMode ? (
-                            <select
-                              style={{ height: "24px" }}
-                              id={index}
-                              name="occurence"
-                              value={occurence}
-                              onChange={editTracker}
-                            >
-                              <option>Daily</option>
-                              <option>Weekly</option>
-                              <option>Monthly</option>
-                              <option>Yearly</option>
-                              <option>Manual</option>
-                            </select>
-                          ) : (
-                            <>
                               <span id="occurence">
                                 {occurence === "Manual" ? (
                                   <button
@@ -188,8 +172,6 @@ function Trackers({
                                   occurence
                                 )}
                               </span>
-                            </>
-                          )}
                         </div>
                         <ProgressBar
                           current={current}
