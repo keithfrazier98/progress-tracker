@@ -26,12 +26,15 @@ The < TrackerContainer /> component is the main component in the package, and th
 ## usage
 
 **General**
+
 The tracker container by default will scroll within its own bounds, and only holds the amount of trackers that fill the vertical height of the screen trackers before it begins to scroll. Support for optional scrolling is backlogged. 
 
 **editMode**
+
 editMode is toggled when clicking the edit button (upper right hand corner). Upon turning on edit mode the container will grow on the right side to create room for the delete tracker button. 
 
 **manual reset** 
+
 Currently, only a manual reset option is supported. An update to allow for daily, weekly, monthly, and yearly automatic tracker reset is backlogged and coming soon. 
 
 
