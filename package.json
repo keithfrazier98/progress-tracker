@@ -11,13 +11,13 @@
     "verbose": true,
     "preset": "jest-puppeteer"
   },
-  "main": "dist/index.js",
+  "main": "dist/",
   "files": [
-    "dist/index.js"
+    "dist/"
   ],
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
-    "@keithers98/react-progress-tracker": "^1.2.3",
+    "@keithers98/react-progress-tracker": "^1.2.4",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
