@@ -13,7 +13,6 @@
 /build
 
 # misc
-dist
 process.md
 .env
 .DS_Store

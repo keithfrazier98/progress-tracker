@@ -1,8 +1,8 @@
 # 🎆 react-progress-tracker 🎆
 
-> NPM: https://www.npmjs.com/package/@keithers98/progress-tracker
+> NPM: https://www.npmjs.com/package/@keithers98/react-progress-tracker
 > 
-> GitHub: https://github.com/keithfrazier98/progress-tracker
+> GitHub: https://github.com/keithfrazier98/react-progress-tracker
 
 A progress tracker creater for react applications. Component based customizalble trackers for tracking your progrss for personal goals.
 

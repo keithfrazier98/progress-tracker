@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Eat apples",
+    "goal": 3,
+    "units": "min",
+    "current": 0,
+    "occurence": "daily",
+    "type": "Incremental",
+    "completed": false
+  },
+  {
+    "title": "Play video games",
+    "goal": 3600,
+    "units": "hr",
+    "current": 0,
+    "occurence": "daily",
+    "type": "Timer",
+    "completed": false
+  }
+]
