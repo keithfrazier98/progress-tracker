@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useInterval from "./utils/useInterval";
-import "./utils/styles.css"
+import "./utils/styles.css";
 
 function ProgressBar({
   index,
@@ -16,7 +16,7 @@ function ProgressBar({
   tracker = "",
 }) {
   const [running, setRunning] = useState(false);
-  const {goal = "", type = "", current = "", completed = "" } = tracker;
+  const { goal = "", type = "", current = "", completed = "" } = tracker;
 
   function handleStart(event) {
     setRunning(!running);
@@ -84,6 +84,7 @@ function ProgressBar({
         <div>
           <div className="buttonDiv" id="IncrementalBtns">
             <button
+              className="tkrBtn"
               disabled={newTracker || completed || editMode}
               onClick={handleIncDec}
               id="dec"
@@ -91,13 +92,20 @@ function ProgressBar({
               <ion-icon name="remove-outline"></ion-icon>
             </button>
             {completed ? (
-              <p className="tkrPfont tkrPmargin" id="iCompleted">Completed!</p>
+              <p className="tkrPfont tkrPmargin" id="iCompleted">
+                Completed!
+              </p>
             ) : (
-              <span className="tkrSpan" id="current" style={{ fontSize: "30px" }}>
+              <span
+                className="tkrSpan"
+                id="current"
+                style={{ fontSize: "30px" }}
+              >
                 {current}
               </span>
             )}
             <button
+              className="tkrBtn"
               disabled={newTracker || completed || editMode}
               onClick={handleIncDec}
               id="inc"
@@ -134,6 +142,7 @@ function ProgressBar({
         <div>
           <div className="buttonDiv" id="TimerBtns">
             <button
+              className="tkrBtn"
               disabled={newTracker || completed || editMode}
               onClick={handleStart}
               id="incTime"
@@ -146,11 +155,17 @@ function ProgressBar({
               )}
             </button>
             {completed ? (
-              <p className="tkrPfont tkrPmargin" id="tCompleted" style={{ alignSelf: "center" }}>
+              <p
+                className="tkrPfont tkrPmargin"
+                id="tCompleted"
+                style={{ alignSelf: "center" }}
+              >
                 Completed!
               </p>
             ) : (
-              <span className="tkrSpan" style={{ fontSize: "30px" }}>{timeString}</span>
+              <span className="tkrSpan" style={{ fontSize: "30px" }}>
+                {timeString}
+              </span>
             )}
           </div>
         </div>
@@ -159,7 +174,7 @@ function ProgressBar({
   }
 
   const calculatePercent = () => {
-    if (current === 0) return 0
+    if (current === 0) return 0;
     return Math.trunc((current / goal) * 100);
   };
 
@@ -168,7 +183,8 @@ function ProgressBar({
       {buttons}
       <div className="tkrBar">
         {editMode || index === null ? (
-          <select className="tkrSelectFont tkrSelectAlign tkrSelectStyle"
+          <select
+            className="tkrSelectFont tkrSelectAlign tkrSelectStyle"
             style={{ height: "24px", width: "100%" }}
             id={index}
             name="type"
@@ -189,7 +205,10 @@ function ProgressBar({
                 justifyContent: "end",
               }}
             >
-              <span className="tkrSpan" style={{ zIndex: 2, overflow: "hidden", color: "white" }}>
+              <span
+                className="tkrSpan"
+                style={{ zIndex: 2, overflow: "hidden", color: "white" }}
+              >
                 {calculatePercent()}%
               </span>
             </div>

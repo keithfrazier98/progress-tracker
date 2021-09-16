@@ -20,11 +20,11 @@ function TrackerContainer({ trackerData = [], uponGoalComplete = () => {} }) {
   const [data, setData] = useState(trackerData);
   const [dataChange, setDataChange] = useState(false);
   const [titleIndex, setTitleIndex] = useState(null);
-  const [completedTrackerData, setCompletedTrackerData] = useState({})
+  const [completedTrackerData, setCompletedTrackerData] = useState({});
 
-  useEffect(()=>{
-  uponGoalComplete(completedTrackerData)
-  }, [completedTrackerData])
+  useEffect(() => {
+    uponGoalComplete(completedTrackerData);
+  }, [completedTrackerData]);
 
   function editTracker(event) {
     const index = event.target.id;
@@ -82,7 +82,11 @@ function TrackerContainer({ trackerData = [], uponGoalComplete = () => {} }) {
     if (!trackerFormData.title) {
       error = true;
       window.alert("New tracker needs a title");
-    } else if (!trackerFormData.goal || Number(trackerFormData.goal) === 0) {
+    } else if (
+      !trackerFormData.goal ||
+      Number(trackerFormData.goal) === 0 ||
+      isNaN(Number(trackerFormData.goal))
+    ) {
       error = true;
       window.alert("New tracker needs a goal");
     }
@@ -144,8 +148,8 @@ function TrackerContainer({ trackerData = [], uponGoalComplete = () => {} }) {
         dataChange={dataChange}
         setDataChange={setDataChange}
         editTracker={editTracker}
-        completedTrackerData ={completedTrackerData}
-        setCompletedTrackerData = {setCompletedTrackerData}
+        completedTrackerData={completedTrackerData}
+        setCompletedTrackerData={setCompletedTrackerData}
       />
     </>
   );
@@ -168,6 +172,7 @@ function TrackerContainer({ trackerData = [], uponGoalComplete = () => {} }) {
     <div className="tkrContainer" id="trackerContainer">
       <div className="tkrButtons">
         <button
+          className="tkrBtn"
           id="add"
           onClick={newTracker ? createTracker : toggleNewTracker}
           disabled={editMode}
@@ -179,6 +184,7 @@ function TrackerContainer({ trackerData = [], uponGoalComplete = () => {} }) {
           )}
         </button>
         <button
+          className="tkrBtn"
           id="edit"
           onClick={newTracker ? cancelNewTracker : toggleEditMode}
         >
@@ -194,9 +200,15 @@ function TrackerContainer({ trackerData = [], uponGoalComplete = () => {} }) {
       <DragDropContext onDragEnd={reorderList}>
         <Droppable droppableId={"trackers"}>
           {(provided) => (
-            <ul className={'tkrUl'} {...provided.droppableProps} ref={provided.innerRef}>
+            <ul
+              className={"tkrUl"}
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
               {newTracker ? (
                 <TrackerForm
+                  setCompletedTrackerData={setCompletedTrackerData}
+                  completedTrackerData={completedTrackerData}
                   trackerFormData={trackerFormData}
                   editTracker={editTracker}
                   setData={setData}
@@ -204,6 +216,7 @@ function TrackerContainer({ trackerData = [], uponGoalComplete = () => {} }) {
                   editMode={editMode}
                   dataChange={dataChange}
                   setDataChange={setDataChange}
+                  newTracker={newTracker}
                 />
               ) : null}
               {trackerElement}

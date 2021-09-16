@@ -1,6 +1,6 @@
 import React from "react";
 import ProgressBar from "./ProgressBar";
-import "./utils/styles.css"
+import "./utils/styles.css";
 
 function TrackerForm({
   trackerFormData,
@@ -10,6 +10,9 @@ function TrackerForm({
   editMode,
   dataChange,
   setDataChange,
+  setCompletedTrackerData,
+  completedTrackerData,
+  newTracker
 }) {
   const { title, goal, current, occurence, type, units } = trackerFormData;
   return (
@@ -20,7 +23,7 @@ function TrackerForm({
             <div className="tkr-flex-container" id="tracker:0">
               <label htmlFor={`title`}>
                 <input
-                className="tkrInput tkrInputStyle"
+                  className="tkrInput tkrInputStyle"
                   name={`title:0`}
                   placeholder="Tracker Title"
                   maxLength="20"
@@ -33,8 +36,7 @@ function TrackerForm({
 
               <p className="tkrPfont tkrPmargin">:</p>
               <input
-                              className="tkrInput tkrInputStyle"
-
+                className="tkrInput tkrInputStyle"
                 name="goal"
                 placeholder="Goal"
                 maxLength="4"
@@ -44,7 +46,8 @@ function TrackerForm({
                 required
               ></input>
               {type === "Timer" ? (
-                <select className="tkrSelectFont tkrSelectAlign tkrSelectStyle"
+                <select
+                  className="tkrSelectFont tkrSelectAlign tkrSelectStyle"
                   name="units"
                   onChange={editTracker}
                   id="0"
@@ -53,10 +56,11 @@ function TrackerForm({
                 >
                   <option className="tkrOptionAlign">min</option>
                   <option className="tkrOptionAlign">hr</option>
-                </select >
+                </select>
               ) : null}
             </div>
-            <select className="tkrSelectFont tkrSelectAlign tkrSelectStyle"
+            <select
+              className="tkrSelectFont tkrSelectAlign tkrSelectStyle"
               style={{ height: "24px" }}
               name="occurence"
               value={occurence}
@@ -66,19 +70,24 @@ function TrackerForm({
             </select>
           </div>
           <ProgressBar
-            tracker = {{title: "",
-            goal: goal,
-            current: current,
-            occurence: occurence,
-            type: type,
-            units: "hr"}}
+            tracker={{
+              title: "",
+              goal: goal,
+              current: current,
+              occurence: occurence,
+              type: type,
+              units: "hr",
+            }}
             index={null}
+            newTracker={newTracker}
             setData={setData}
             data={data}
             editMode={editMode}
             editTracker={editTracker}
             setDataChange={setDataChange}
             dataChange={dataChange}
+            setCompletedTrackerData={setCompletedTrackerData}
+            completedTrackerData={completedTrackerData}
           />
         </form>
       </div>

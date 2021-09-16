@@ -112,9 +112,9 @@ function Trackers({
                   >
                     <div className="tkrCancelBox">
                       <div className="tracker">
-                        <div className="flex-container tkrInfo">
+                        <div className="tkr-flex-container tkrInfo">
                           <div
-                            className="flex-container"
+                            className="tkr-flex-container"
                             id={`tracker:${index}`}
                           >
                             {editMode ? (
@@ -165,7 +165,7 @@ function Trackers({
                           </div>
                           <span className="tkrSpan" id="occurence">
                             {occurence === "Manual" ? (
-                              <button
+                              <button className="tkrBtn"
                                 id={index}
                                 name="reset"
                                 onClick={manualReset}
@@ -200,7 +200,7 @@ function Trackers({
                             padding: "50px 0 50px 0",
                           }}
                         >
-                          <button
+                          <button className="tkrBtn"
                             id={index}
                             role="button"
                             onClick={deleteTracker}
