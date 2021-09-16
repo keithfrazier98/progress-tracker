@@ -9,7 +9,7 @@ A progress tracker creater for react applications. Component based customizalble
 
 install with:
 
-`npm i @keithers98/progress-tracker`
+`npm i @keithers98/react-progress-tracker`
 
 ## 🟢 Tracker Container Component 🟢
 
