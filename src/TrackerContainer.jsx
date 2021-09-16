@@ -5,7 +5,7 @@ import "./styles/Container.css";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 const schedule = require("node-schedule");
 
-function TrackerContainer() {
+function TrackerContainer({ trackerData = [], uponGoalComplete = () => {} }) {
   const [newTracker, setNewTracker] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const initalTrackerData = {
@@ -17,9 +17,14 @@ function TrackerContainer() {
     units: "hr",
   };
   const [trackerFormData, setTrackerFormData] = useState(initalTrackerData);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(trackerData);
   const [dataChange, setDataChange] = useState(false);
   const [titleIndex, setTitleIndex] = useState(null);
+  const [completedTrackerData, setCompletedTrackerData] = useState({})
+
+  useEffect(()=>{
+  uponGoalComplete(completedTrackerData)
+  }, [completedTrackerData])
 
   function editTracker(event) {
     const index = event.target.id;
@@ -106,7 +111,7 @@ function TrackerContainer() {
           });
         }
       } else {
-        newData.splice(0, 0, { ...trackerFormData});
+        newData.splice(0, 0, { ...trackerFormData });
       }
 
       setData(newData);
@@ -139,6 +144,8 @@ function TrackerContainer() {
         dataChange={dataChange}
         setDataChange={setDataChange}
         editTracker={editTracker}
+        completedTrackerData ={completedTrackerData}
+        setCompletedTrackerData = {setCompletedTrackerData}
       />
     </>
   );

@@ -11,6 +11,8 @@ function Trackers({
   dataChange,
   setDataChange,
   editTracker,
+  completedTrackerData,
+  setCompletedTrackerData,
 }) {
   const placeholderTracker = (
     <>
@@ -28,12 +30,12 @@ function Trackers({
             {...provided.dragHandleProps}
             ref={provided.innerRef}
           >
-            <div className="cancelBox" style={{height:"300px"}}>
-              <div className="tracker" style={{display:"flex"}}>
-                    <h4 style={{alignSelf:"center"}}>
-                      Click <ion-icon name="add-circle-outline"></ion-icon> to
-                      create a new tracker!
-                    </h4>
+            <div className="cancelBox" style={{ height: "300px" }}>
+              <div className="tracker" style={{ display: "flex" }}>
+                <h4 style={{ alignSelf: "center" }}>
+                  Click <ion-icon name="add-circle-outline"></ion-icon> to
+                  create a new tracker!
+                </h4>
               </div>
             </div>
           </li>
@@ -90,11 +92,10 @@ function Trackers({
   return (
     <>
       {data.length > 0 || newTracker
-        ? data.map(
-            (
-              { title, goal, occurence, type, current, units, completed },
-              index
-            ) => (
+        ? data.map((tracker, index) => {
+            const { title, goal, occurence, type, current, units, completed } =
+              tracker;
+            return (
               <Draggable
                 key={title}
                 index={index}
@@ -158,35 +159,33 @@ function Trackers({
                               ? displayTimerUnits(units, index)
                               : null}
                           </div>
-                              <span id="occurence">
-                                {occurence === "Manual" ? (
-                                  <button
-                                    id={index}
-                                    name="reset"
-                                    onClick={manualReset}
-                                    style={{ fontSize: "20px" }}
-                                  >
-                                    <ion-icon name="refresh-outline"></ion-icon>
-                                  </button>
-                                ) : (
-                                  occurence
-                                )}
-                              </span>
+                          <span id="occurence">
+                            {occurence === "Manual" ? (
+                              <button
+                                id={index}
+                                name="reset"
+                                onClick={manualReset}
+                                style={{ fontSize: "20px" }}
+                              >
+                                <ion-icon name="refresh-outline"></ion-icon>
+                              </button>
+                            ) : (
+                              occurence
+                            )}
+                          </span>
                         </div>
                         <ProgressBar
-                          current={current}
-                          goal={goal}
-                          type={type}
+                        tracker = {tracker}
                           index={index}
                           setData={setData}
                           data={data}
                           editMode={editMode}
                           editTracker={editTracker}
-                          occurence={occurence}
                           setDataChange={setDataChange}
                           dataChange={dataChange}
                           newTracker={newTracker}
-                          completed={completed}
+                          completedTrackerData={completedTrackerData}
+                          setCompletedTrackerData={setCompletedTrackerData}
                         />
                       </div>
                       {editMode ? (
@@ -210,8 +209,8 @@ function Trackers({
                   </li>
                 )}
               </Draggable>
-            )
-          )
+            );
+          })
         : placeholderTracker}
     </>
   );

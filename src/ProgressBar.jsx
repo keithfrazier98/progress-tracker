@@ -3,21 +3,22 @@ import useInterval from "./utils/useInterval";
 import "./styles/ProgressBar.css";
 
 function ProgressBar({
-  current,
-  type,
   index,
   setData,
   data,
   editMode,
   editTracker,
-  goal,
   setDataChange,
   dataChange,
   newTracker,
-  completed,
+  completedTrackerData,
+  setCompletedTrackerData,
+  tracker = "",
 }) {
+  console.log(tracker)
   const [running, setRunning] = useState(false);
-
+  const {goal = "", type = "", current = "", completed = "" } = tracker;
+  
   function handleStart(event) {
     setRunning(!running);
   }
@@ -38,14 +39,19 @@ function ProgressBar({
 
     if (event) {
       call = event.target.parentNode.id;
-      event.target.parentNode.id === "inc" && goal == current + 1
-        ? (setCompleted = true)
-        : (setCompleted = false);
+      if (event.target.parentNode.id === "inc" && goal == current + 1) {
+        setCompleted = true;
+        setCompletedTrackerData(tracker);
+      } else {
+        setCompleted = false;
+        setCompletedTrackerData({});
+      }
     }
 
     if (!event && goal === current + 1) {
       setRunning(false);
       setCompleted = true;
+      setCompletedTrackerData(tracker);
     }
 
     setData(() => {
@@ -140,7 +146,9 @@ function ProgressBar({
               )}
             </button>
             {completed ? (
-              <p id="tCompleted" style={{alignSelf:"center"}}>Completed!</p>
+              <p id="tCompleted" style={{ alignSelf: "center" }}>
+                Completed!
+              </p>
             ) : (
               <span style={{ fontSize: "30px" }}>{timeString}</span>
             )}

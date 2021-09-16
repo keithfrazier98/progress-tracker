@@ -62,15 +62,17 @@ function TrackerForm({
             </select>
           </div>
           <ProgressBar
-            current={current}
-            goal={goal}
-            type={type}
+            tracker = {{title: "",
+            goal: goal,
+            current: current,
+            occurence: occurence,
+            type: type,
+            units: "hr"}}
             index={null}
             setData={setData}
             data={data}
             editMode={editMode}
             editTracker={editTracker}
-            occurence={occurence}
             setDataChange={setDataChange}
             dataChange={dataChange}
           />
