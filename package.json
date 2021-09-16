@@ -11,10 +11,10 @@
     "verbose": true,
     "preset": "jest-puppeteer"
   },
-  "main": "dist/src",
+  "main": "dist/",
   "files": [
-    "styles/",
-    "utils/",
+    "dist/styles/",
+    "dist/utils/",
     "dist/ProgressBar.jsx",
     "dist/TrackerContainer.jsx",
     "dist/TrackerForm.jsx",
