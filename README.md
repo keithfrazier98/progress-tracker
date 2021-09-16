@@ -4,7 +4,8 @@
 >
 > GitHub: https://github.com/keithfrazier98/react-progress-tracker
 
-A progress tracker creater for react applications. Component based customizalble trackers for tracking your progrss for personal goals.
+A progress tracker creater for react applications. Component based customizalble trackers for tracking your progrss for personal goals. Create timed or incremental trackers with a title and goal and track your progress for a goal you have.
+
 
 install with:
 
@@ -12,7 +13,7 @@ install with:
 
 ## 🟢 Tracker Container Component 🟢
 
-The < TrackerContainer /> component is the main component in the package, and the only component for supported use at the moment. It makes use of the other components in the file:
+The < TrackerContainer /> component is the main component in the package, and the only component supported for use at the moment. It makes use of the other components in the file:
 
 - < TrackerForm/>
 
@@ -27,9 +28,18 @@ The < TrackerContainer /> component is the main component in the package, and th
 
 ## usage
 
-You'll first want to import the component from the correct directory in the package:
+After installing, import the component from the package:
 
 `import TrackerContainer from '@keithers98/react-progress-tracker/dist/TrackerContainer';`
+
+## props
+
+The TrackerContainer components takes the following props:
+
+| prop             | type                                      | default|use                                                           |
+| :--------------- | :---------------------------------------- | :------| :------------------------------------------------------------ |
+| trackerData      | array of tracker objects (or a json file) | {} |load the TrackerContainer with predefined trackers            |
+| uponGoalComplete | callback function  | ()=>{}                       | the callback will execute when a tracker is completed will be passed the data of the completed tracker |
 
 **General**
 
@@ -43,11 +53,4 @@ editMode is toggled when clicking the edit button (upper right hand corner). Upo
 
 Currently, only a manual reset option is supported. An update to allow for daily, weekly, monthly, and yearly automatic tracker reset is backlogged and coming soon.
 
-**Props**
 
-The TrackerContainer components takes the following props:
-
-| prop             | type                                      | use                                                           |
-| :--------------- | :---------------------------------------- | :------------------------------------------------------------ |
-| trackerData      | array of tracker objects (or a json file) | load the TrackerContainer with predefined trackers            |
-| uponGoalComplete | callback function                         | the callback will be passed the data of the completed tracker |
