@@ -38,7 +38,7 @@ The TrackerContainer components takes the following props:
 
 | prop             | type                                      | default|use                                                           |
 | :--------------- | :---------------------------------------- | :------| :------------------------------------------------------------ |
-| trackerData      | array of tracker objects (or a json file) | {} |load the TrackerContainer with predefined trackers            |
+| trackerData      | array of tracker objects (or a json file) | [] |load the TrackerContainer with predefined trackers            |
 | uponGoalComplete | callback function  | ()=>{}                       | the callback will execute when a tracker is completed will be passed the data of the completed tracker |
 
 The props are passed to the TrackerContainer as so:
