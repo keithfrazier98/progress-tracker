@@ -15,10 +15,9 @@ function ProgressBar({
   setCompletedTrackerData,
   tracker = "",
 }) {
-  console.log(tracker)
   const [running, setRunning] = useState(false);
   const {goal = "", type = "", current = "", completed = "" } = tracker;
-  
+
   function handleStart(event) {
     setRunning(!running);
   }
@@ -159,6 +158,7 @@ function ProgressBar({
   }
 
   const calculatePercent = () => {
+    if (current === 0) return 0
     return Math.trunc((current / goal) * 100);
   };
 

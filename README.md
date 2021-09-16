@@ -41,6 +41,18 @@ The TrackerContainer components takes the following props:
 | trackerData      | array of tracker objects (or a json file) | {} |load the TrackerContainer with predefined trackers            |
 | uponGoalComplete | callback function  | ()=>{}                       | the callback will execute when a tracker is completed will be passed the data of the completed tracker |
 
+The props are passed to the TrackerContainer as so:
+
+```
+ <TrackerContainer
+      trackerData={trackerData}
+      uponGoalComplete={(tracker) => {
+        console.log("callback", tracker);
+      }}
+    /> 
+```
+    
+
 **General**
 
 The tracker container by default will scroll within its own bounds, and only holds the amount of trackers that fill the vertical height of the screen trackers before it begins to scroll. Support for optional scrolling is backlogged.
@@ -53,4 +65,6 @@ editMode is toggled when clicking the edit button (upper right hand corner). Upo
 
 Currently, only a manual reset option is supported. An update to allow for daily, weekly, monthly, and yearly automatic tracker reset is backlogged and coming soon.
 
+**upcoming features**
+Checkout the backlog in the projects section of the repository! If you are interested in collaborating I'd be happy to work with you!
 

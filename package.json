@@ -11,9 +11,14 @@
     "verbose": true,
     "preset": "jest-puppeteer"
   },
-  "main": "dist/",
+  "main": "dist/src",
   "files": [
-    "dist/"
+    "styles/",
+    "utils/",
+    "dist/ProgressBar.jsx",
+    "dist/TrackerContainer.jsx",
+    "dist/TrackerForm.jsx",
+    "dist/Trackers.jsx"
   ],
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
