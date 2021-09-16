@@ -66,5 +66,6 @@ editMode is toggled when clicking the edit button (upper right hand corner). Upo
 Currently, only a manual reset option is supported. An update to allow for daily, weekly, monthly, and yearly automatic tracker reset is backlogged and coming soon.
 
 **upcoming features**
+
 Checkout the backlog in the projects section of the repository! If you are interested in collaborating I'd be happy to work with you!
 
