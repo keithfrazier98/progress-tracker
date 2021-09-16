@@ -1,5 +1,6 @@
 import React from "react";
 import ProgressBar from "./ProgressBar";
+import "./utils/styles.css"
 
 function TrackerForm({
   trackerFormData,
@@ -12,13 +13,14 @@ function TrackerForm({
 }) {
   const { title, goal, current, occurence, type, units } = trackerFormData;
   return (
-    <li key={title}>
+    <li className="tkrLi" key={title}>
       <div className="tracker">
         <form>
-          <div className="flex-container info">
-            <div className="flex-container" id="tracker:0">
+          <div className="tkr-flex-container tkrInfo">
+            <div className="tkr-flex-container" id="tracker:0">
               <label htmlFor={`title`}>
                 <input
+                className="tkrInput tkrInputStyle"
                   name={`title:0`}
                   placeholder="Tracker Title"
                   maxLength="20"
@@ -29,8 +31,10 @@ function TrackerForm({
                 ></input>
               </label>
 
-              <p>:</p>
+              <p className="tkrPfont tkrPmargin">:</p>
               <input
+                              className="tkrInput tkrInputStyle"
+
                 name="goal"
                 placeholder="Goal"
                 maxLength="4"
@@ -40,25 +44,25 @@ function TrackerForm({
                 required
               ></input>
               {type === "Timer" ? (
-                <select
+                <select className="tkrSelectFont tkrSelectAlign tkrSelectStyle"
                   name="units"
                   onChange={editTracker}
                   id="0"
                   data-current={units}
                   value={units}
                 >
-                  <option>min</option>
-                  <option>hr</option>
-                </select>
+                  <option className="tkrOptionAlign">min</option>
+                  <option className="tkrOptionAlign">hr</option>
+                </select >
               ) : null}
             </div>
-            <select
+            <select className="tkrSelectFont tkrSelectAlign tkrSelectStyle"
               style={{ height: "24px" }}
               name="occurence"
               value={occurence}
               onChange={editTracker}
             >
-              <option>Manual</option>
+              <option className="tkrOptionAlign">Manual</option>
             </select>
           </div>
           <ProgressBar

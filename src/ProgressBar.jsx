@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useInterval from "./utils/useInterval";
-import "./styles/ProgressBar.css";
+import "./utils/styles.css"
 
 function ProgressBar({
   index,
@@ -91,9 +91,9 @@ function ProgressBar({
               <ion-icon name="remove-outline"></ion-icon>
             </button>
             {completed ? (
-              <p id="iCompleted">Completed!</p>
+              <p className="tkrPfont tkrPmargin" id="iCompleted">Completed!</p>
             ) : (
-              <span id="current" style={{ fontSize: "30px" }}>
+              <span className="tkrSpan" id="current" style={{ fontSize: "30px" }}>
                 {current}
               </span>
             )}
@@ -137,6 +137,7 @@ function ProgressBar({
               disabled={newTracker || completed || editMode}
               onClick={handleStart}
               id="incTime"
+              className="tkrButtonProgress"
             >
               {running ? (
                 <ion-icon name="pause-outline"></ion-icon>
@@ -145,11 +146,11 @@ function ProgressBar({
               )}
             </button>
             {completed ? (
-              <p id="tCompleted" style={{ alignSelf: "center" }}>
+              <p className="tkrPfont tkrPmargin" id="tCompleted" style={{ alignSelf: "center" }}>
                 Completed!
               </p>
             ) : (
-              <span style={{ fontSize: "30px" }}>{timeString}</span>
+              <span className="tkrSpan" style={{ fontSize: "30px" }}>{timeString}</span>
             )}
           </div>
         </div>
@@ -165,22 +166,22 @@ function ProgressBar({
   return (
     <div className="progressContainer">
       {buttons}
-      <div className="bar">
+      <div className="tkrBar">
         {editMode || index === null ? (
-          <select
+          <select className="tkrSelectFont tkrSelectAlign tkrSelectStyle"
             style={{ height: "24px", width: "100%" }}
             id={index}
             name="type"
             value={type}
             onChange={editTracker}
           >
-            <option>Incremental</option>
-            <option>Timer</option>
+            <option className="tkrOptionAlign">Incremental</option>
+            <option className="tkrOptionAlign">Timer</option>
           </select>
         ) : (
           <>
             <div
-              className="progress"
+              className="tkrProgress"
               style={{
                 width: `${calculatePercent()}%`,
                 zIndex: 1,
@@ -188,7 +189,7 @@ function ProgressBar({
                 justifyContent: "end",
               }}
             >
-              <span style={{ zIndex: 2, overflow: "hidden", color: "white" }}>
+              <span className="tkrSpan" style={{ zIndex: 2, overflow: "hidden", color: "white" }}>
                 {calculatePercent()}%
               </span>
             </div>

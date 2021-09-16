@@ -1,7 +1,7 @@
 import React from "react";
 import ProgressBar from "./ProgressBar";
 import { Draggable } from "react-beautiful-dnd";
-import "./styles/Trackers.css";
+import "./utils/styles.css";
 
 function Trackers({
   newTracker,
@@ -23,16 +23,16 @@ function Trackers({
         isDragDisabled={!editMode}
       >
         {(provided) => (
-          <li
+          <li className="tkrLi"
             id={"title"}
             key={"title"}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
           >
-            <div className="cancelBox" style={{ height: "300px" }}>
+            <div className="tkrCancelBox" style={{ height: "300px" }}>
               <div className="tracker" style={{ display: "flex" }}>
-                <h4 style={{ alignSelf: "center" }}>
+                <h4 className="tkrH4 tkrH4margin" style={{ alignSelf: "center" }}>
                   Click <ion-icon name="add-circle-outline"></ion-icon> to
                   create a new tracker!
                 </h4>
@@ -46,18 +46,18 @@ function Trackers({
 
   function displayTimerUnits(units, index) {
     return editMode ? (
-      <select
+      <select className="tkrSelectFont tkrSelectAlign tkrSelectStyle"
         name="units"
         onChange={editTracker}
         id={index}
         data-current={units}
         value={units}
       >
-        <option>min</option>
-        <option>hr</option>
+        <option className="tkrOptionAlign">min</option>
+        <option className="tkrOptionAlign">hr</option>
       </select>
     ) : (
-      <p id={units} data-units={units}>
+      <p className="tkrPfont tkrPmargin" id={units} data-units={units}>
         /{units}
       </p>
     );
@@ -103,16 +103,16 @@ function Trackers({
                 isDragDisabled={!editMode}
               >
                 {(provided) => (
-                  <li
+                  <li className="tkrLi"
                     id={title}
                     key={title}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}
                   >
-                    <div className="cancelBox">
+                    <div className="tkrCancelBox">
                       <div className="tracker">
-                        <div className="flex-container info">
+                        <div className="flex-container tkrInfo">
                           <div
                             className="flex-container"
                             id={`tracker:${index}`}
@@ -120,6 +120,7 @@ function Trackers({
                             {editMode ? (
                               <label htmlFor={`title:${index}`}>
                                 <input
+                                  className="tkrInput tkrInputStyle"
                                   id={index}
                                   name={`title:${index}`}
                                   key={`title`}
@@ -131,11 +132,14 @@ function Trackers({
                                 ></input>
                               </label>
                             ) : (
-                              <h4 id="title">{title}</h4>
+                              <h4 className="tkrH4 tkrH4margin" id="title">
+                                {title}
+                              </h4>
                             )}
-                            <p>:</p>
+                            <p className="tkrPfont tkrPmargin">:</p>
                             {editMode ? (
                               <input
+                                className="tkrInput tkrInputStyle"
                                 id={index}
                                 name="goal"
                                 placeholder="Goal"
@@ -149,7 +153,7 @@ function Trackers({
                                 onChange={editTracker}
                               ></input>
                             ) : (
-                              <p id="goal">
+                              <p className="tkrPfont tkrPmargin" id="goal">
                                 {type === "Timer"
                                   ? displayTimerGoal(goal)
                                   : goal}
@@ -159,7 +163,7 @@ function Trackers({
                               ? displayTimerUnits(units, index)
                               : null}
                           </div>
-                          <span id="occurence">
+                          <span className="tkrSpan" id="occurence">
                             {occurence === "Manual" ? (
                               <button
                                 id={index}
@@ -175,7 +179,7 @@ function Trackers({
                           </span>
                         </div>
                         <ProgressBar
-                        tracker = {tracker}
+                          tracker={tracker}
                           index={index}
                           setData={setData}
                           data={data}

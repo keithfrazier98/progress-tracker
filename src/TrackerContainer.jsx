@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Trackers from "./Trackers";
 import TrackerForm from "./TrackerForm";
-import "./styles/Container.css";
+import "./utils/styles.css";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 const schedule = require("node-schedule");
 
@@ -165,8 +165,8 @@ function TrackerContainer({ trackerData = [], uponGoalComplete = () => {} }) {
   }, [dataChange, trackerFormData]);
 
   return (
-    <div className="container" id="trackerContainer">
-      <div className="buttons">
+    <div className="tkrContainer" id="trackerContainer">
+      <div className="tkrButtons">
         <button
           id="add"
           onClick={newTracker ? createTracker : toggleNewTracker}
@@ -194,7 +194,7 @@ function TrackerContainer({ trackerData = [], uponGoalComplete = () => {} }) {
       <DragDropContext onDragEnd={reorderList}>
         <Droppable droppableId={"trackers"}>
           {(provided) => (
-            <ul {...provided.droppableProps} ref={provided.innerRef}>
+            <ul className={'tkrUl'} {...provided.droppableProps} ref={provided.innerRef}>
               {newTracker ? (
                 <TrackerForm
                   trackerFormData={trackerFormData}
