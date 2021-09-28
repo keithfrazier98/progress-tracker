@@ -7,6 +7,7 @@
     "components",
     "ui"
   ],
+  "license": "MIT",
   "jest": {
     "verbose": true,
     "preset": "jest-puppeteer"
